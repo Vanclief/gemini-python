@@ -19,7 +19,23 @@ class Market(object):
         if status != 200:
             return status, response
 
-        return status, helpers.dict_to_float(response)
+        s = (symbol[:3].upper())
+
+        parsed_response = {}
+
+        parsed_response['bid'] = float(response['bid'])
+        parsed_response['ask'] = float(response['ask'])
+        parsed_response['mid'] = ((parsed_response['bid'] +
+                                  parsed_response['ask']) / 2)
+        parsed_response['last_price'] = float(response['last'])
+        parsed_response['low'] = float(0)
+        parsed_response['high'] = float(0)
+        parsed_response['volume'] = float(
+                response['volume'][s])
+        parsed_response['timestamp'] = float(
+                response['volume']['timestamp'])/1000
+
+        return status, parsed_response
 
     def get_orderbook(self, symbol):
 

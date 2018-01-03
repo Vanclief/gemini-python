@@ -1,28 +1,29 @@
-import requests
-import json
+def dict_to_float(d):
+    """
+    Converts all strings to floats from a dict
+    """
+    if type(d) is dict:
+        for key, value in d.items():
+            if type(value) is str:
+                try:
+                    d[key] = float(value)
+                except ValueError:
+                    d[key] = str(value)
+
+    return d
 
 
-class Requester(object):
+def list_dict_to_float(l):
+    """
+    Applies dict_to_float to all elements from a list
+    """
+    for d in l:
 
-    def __init__(self, api_base):
-        self.api_base = api_base
+        try:
+            del d['timestampms']
+        except KeyError:
+            pass
+        d = dict_to_float(d)
 
-    def _construct_url(self, endpoint):
-        """
-        Construct the url
-        """
+    return l
 
-        return self.api_base + endpoint
-
-    def get(self, endpoint):
-        """
-        Make get http request, return status and response
-        """
-
-        url = self._construct_url(endpoint)
-
-        r = requests.request("GET", url)
-        status_code = r.status_code
-        response = json.loads(r.text)
-
-        return status_code, response

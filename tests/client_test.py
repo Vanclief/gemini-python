@@ -10,7 +10,7 @@ SYMBOLS_URL = 'https://api.gemini.com/v1/symbols'
 
 
 def test_should_have_correct_url():
-    g = Bitfinex()
+    g = Gemini()
     assert g.api_base == 'https://api.gemini.com/v1/'
 
 
@@ -45,8 +45,8 @@ def test_should_return_ticker():
             "bid": 977.35,
             "ask": 977.59,
             "last_price": 977.65,
-            "low": 0,
-            "high": 0,
+            "low": 0.0,
+            "high": 0.0,
             "volume": 2210.505328803,
             "timestamp": 1483018200.0
             }
@@ -62,7 +62,7 @@ def test_should_return_orderbook():
     mock_body = (
             '{"bids":[{"price":"15177.04","amount":"16.90585",' +
             '"timestamp":"1514996460"}],"asks":[{"price":"15177.05",' +
-            '"amount":"2.36048769","timestamp":"1514996460"}]}"'
+            '"amount":"2.36048769","timestamp":"1514996460"}]}'
             )
     mock_url = ORDERS_URL + mock_symbol
     mock_status = 200
@@ -81,7 +81,7 @@ def test_should_return_orderbook():
                 ],
             "asks": [
                 {
-                    "price": 15177.04,
+                    "price": 15177.05,
                     "amount": 2.36048769,
                     "timestamp": 1514996460.0
                     }
@@ -120,7 +120,7 @@ def test_should_return_trades():
 @httpretty.activate
 def test_should_return_symbols():
 
-    mock_body = '[ "btcusd", "ethusd", "ethbtc" ]'
+    mock_body = '["btcusd","ethusd","ethbtc" ]'
     mock_url = SYMBOLS_URL
     mock_status = 200
 
