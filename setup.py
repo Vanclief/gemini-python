@@ -19,4 +19,4 @@ setup(
     url='https://github.com/Vanclief/gemini-python',
     license=license,
     packages=find_packages(exclude=('tests'))
-
+    )
